@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mis Targets</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Cerrar sesión
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home-container ion-padding">
+
+  <div class="upload-section">
+    <ion-item>
+      <ion-label>Seleccionar archivos</ion-label>
+      <input type="file" (change)="onFilesSelected($event)" multiple />
+    </ion-item>
+    <p class="info-text">
+      Puedes subir los 3 archivos NFT juntos (.iset, .fset, .fset3), un marker (.patt) o una imagen (.jpg/.png).
+    </p>
+  </div>
+
+  <ion-list *ngIf="!isLoading && targets.length > 0">
+    <ion-item *ngFor="let target of targets">
+      <ion-label>
+        <h2>{{ target.name }}</h2>
+        <p>Tipo: {{ target.type }}</p>
+        <p *ngIf="target.contenturl">URL: {{ target.contenturl }}</p>
+        <p *ngIf="target.patternurl">Pattern: {{ target.patternurl }}</p>
+        <p *ngIf="target.nfturlbase">NFT Base: {{ target.nfturlbase }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editTarget(target)">
+          <ion-icon name="create-outline" slot="start"></ion-icon>
+          Editar
+        </ion-button>
+        <ion-button color="danger" (click)="deleteTarget(target)">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Eliminar
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!isLoading && targets.length === 0" class="empty-message">
+    <p>No tienes targets aún. ¡Sube uno para empezar!</p>
+  </div>
+
+  <ion-button expand="block" routerLink="/ar-view">
+    <ion-icon name="rocket-outline" slot="start"></ion-icon>
+    Abrir AR
+  </ion-button>
+
+</ion-content>
