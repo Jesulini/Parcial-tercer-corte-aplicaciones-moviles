@@ -1,56 +1,72 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Mis Targets</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Mis Targets AR</ion-title>
+
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        Cerrar sesión
+        <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="home-container ion-padding">
+<ion-content class="fire-background">
 
-  <div class="upload-section">
-    <ion-item>
-      <ion-label>Seleccionar archivos</ion-label>
-      <input type="file" (change)="onFilesSelected($event)" multiple />
-    </ion-item>
-    <p class="info-text">
-      Puedes subir los 3 archivos NFT juntos (.iset, .fset, .fset3), un marker (.patt) o una imagen (.jpg/.png).
-    </p>
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <ion-list *ngIf="!isLoading && targets.length > 0">
-    <ion-item *ngFor="let target of targets">
-      <ion-label>
-        <h2>{{ target.name }}</h2>
-        <p>Tipo: {{ target.type }}</p>
-        <p *ngIf="target.contenturl">URL: {{ target.contenturl }}</p>
-        <p *ngIf="target.patternurl">Pattern: {{ target.patternurl }}</p>
-        <p *ngIf="target.nfturlbase">NFT Base: {{ target.nfturlbase }}</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <ion-button color="primary" (click)="editTarget(target)">
-          <ion-icon name="create-outline" slot="start"></ion-icon>
+  <!-- Subir archivos -->
+  <div class="upload-container">
+    <label class="upload-btn">
+      <ion-icon name="cloud-upload-outline"></ion-icon>
+      Subir Target
+      <input
+        type="file"
+        multiple
+        (change)="onFilesSelected($event)"
+        hidden
+      />
+    </label>
+  </div>
+
+  <!-- Lista de targets -->
+  <div class="cards-container">
+    <div
+      class="target-card fire-card"
+      *ngFor="let t of targets"
+      (click)="editTarget(t)"
+    >
+      <div class="card-header">
+        <h2>{{ t.name }}</h2>
+        <span class="type-tag">{{ t.type | uppercase }}</span>
+      </div>
+
+      <div class="card-preview">
+        <!-- Imagen si existe -->
+        <img
+          *ngIf="t.contenturl"
+          [src]="t.contenturl"
+          alt="preview"
+        />
+
+        <!-- Para markers -->
+        <p *ngIf="t.patternurl && !t.contenturl">Marker .patt</p>
+
+        <!-- Para NFT sin imagen -->
+        <p *ngIf="t.nfturlbase && !t.contenturl">NFT Target</p>
+      </div>
+
+      <div class="card-actions">
+        <ion-button fill="outline" color="warning" (click)="editTarget(t); $event.stopPropagation()">
           Editar
         </ion-button>
-        <ion-button color="danger" (click)="deleteTarget(target)">
-          <ion-icon name="trash-outline" slot="start"></ion-icon>
+
+        <ion-button fill="solid" color="danger" (click)="deleteTarget(t); $event.stopPropagation()">
           Eliminar
         </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-list>
-
-  <div *ngIf="!isLoading && targets.length === 0" class="empty-message">
-    <p>No tienes targets aún. ¡Sube uno para empezar!</p>
+      </div>
+    </div>
   </div>
-
-  <ion-button expand="block" routerLink="/ar-view">
-    <ion-icon name="rocket-outline" slot="start"></ion-icon>
-    Abrir AR
-  </ion-button>
-
 </ion-content>

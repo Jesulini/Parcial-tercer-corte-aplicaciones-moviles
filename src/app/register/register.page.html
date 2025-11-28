@@ -1,39 +1,54 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="register-gradient">
 
-<ion-content class="register-container">
-  <div class="form-wrapper">
-    <h2 class="title">Crear cuenta</h2>
-    <p class="subtitle">Regístrate para continuar</p>
+  <div class="overlay"></div>
 
-    <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
-      <ion-item>
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
+  <div class="register-wrapper">
+
+    <div class="logo-area">
+      <div class="fire-circle">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+      <h1>Crear Cuenta</h1>
+      <p>Regístrate para unirte a la experiencia</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="form-box">
+
+      <ion-item class="input-item" lines="none">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input 
+          type="email"
+          placeholder="Correo electrónico"
+          formControlName="email"
+        ></ion-input>
       </ion-item>
-      <div class="error-message" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+      <p class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
         {{ getErrorMessage('email') }}
-      </div>
+      </p>
 
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
+      <ion-item class="input-item" lines="none">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input 
+          type="password"
+          placeholder="Contraseña"
+          formControlName="password"
+        ></ion-input>
       </ion-item>
-      <div class="error-message" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+      <p class="error-message" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
         {{ getErrorMessage('password') }}
-      </div>
+      </p>
 
-      <ion-button expand="block" type="submit" [disabled]="registerForm.invalid">
-        Registrarse
+      <ion-button expand="block" type="submit" class="btn-fire">
+        Registrarme 🔥
       </ion-button>
+
     </form>
 
-    <div class="login-link">
-      <p>¿Ya tienes cuenta?</p>
-      <ion-button fill="clear" routerLink="/login">Iniciar sesión</ion-button>
+    <div class="footer">
+      <span>¿Ya tienes una cuenta?</span>
+      <a routerLink="/login">Inicia sesión</a>
     </div>
+
   </div>
+
 </ion-content>
