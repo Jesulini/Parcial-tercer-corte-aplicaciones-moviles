@@ -1,151 +1,156 @@
-/* Fondo fuego */
-.fire-background {
+/* ======= FONDO TIPO FUEGO ANIMADO ======= */
+ion-content {
   --background: transparent;
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at bottom, #ff6a00, #1a0000 70%);
+  background: linear-gradient(135deg, #ff6a00, #ff3c00, #cc0000, #ff6a00);
+  background-size: 300% 300%;
+  animation: fireBg 9s ease infinite;
 }
 
-/* Partículas de fuego */
-.fire-background::before,
-.fire-background::after {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 120, 0, 0.12) 0%,
-    rgba(255, 0, 0, 0.05) 40%,
-    transparent 70%
-  );
-  animation: fire-pulse 6s infinite ease-in-out;
-  pointer-events: none;
-  filter: blur(40px);
+@keyframes fireBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.fire-background::after {
-  animation-duration: 9s;
-  animation-direction: reverse;
+
+/* ======= LOADING ======= */
+.loading-wrapper {
+  text-align: center;
+  margin-top: 40%;
+  color: #fff;
+
+  ion-spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  p {
+    margin-top: 10px;
+    color: #ffe6d5;
+    font-weight: 600;
+  }
 }
 
-@keyframes fire-pulse {
-  0% { transform: scale(1) translateY(0); opacity: 0.7; }
-  50% { transform: scale(1.3) translateY(-20px); opacity: 1; }
-  100% { transform: scale(1) translateY(0); opacity: 0.7; }
+
+/* ======= SECCIÓN SUBIR TARGET ======= */
+.upload-section {
+  margin: 20px;
 }
 
-/* Spinner */
-.loading-overlay {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.upload-item {
+  --background: rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(255, 120, 0, 0.6);
 }
 
-/* Botón subir archivo */
-.upload-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+.label-title {
+  font-weight: bold;
+  color: #fff3e0;
+  font-size: 1.2rem;
 }
 
-.upload-btn {
-  background: rgba(255, 80, 0, 0.8);
-  padding: 12px 18px;
-  font-size: 16px;
-  color: white;
-  border-radius: 12px;
+.file-btn {
+  background: rgba(255, 80, 0, 0.35);
+  border: 1px solid rgba(255, 150, 0, 0.8);
+  padding: 8px 12px;
+  border-radius: 14px;
+  color: #fff;
   display: flex;
   align-items: center;
-  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(255, 90, 0, 0.8);
-  transition: 0.3s;
+  transition: 0.2s;
+
+  ion-icon {
+    font-size: 1.4rem;
+    margin-right: 6px;
+  }
+
+  &:hover {
+    background: rgba(255, 90, 0, 0.55);
+    box-shadow: 0 0 15px rgba(255, 120, 0, 0.9);
+  }
+
+  input {
+    display: none;
+  }
 }
 
-.upload-btn:hover {
-  background: #ffa144;
-  transform: scale(1.05);
-}
 
-/* Contenedor de las cards */
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+/* ======= CARTAS DE TARGET 🔥🔥🔥 ======= */
+.targets-section {
   padding: 15px;
 }
 
-/* Cards */
 .target-card {
-  background: rgba(20, 0, 0, 0.75);
-  border: 1px solid rgba(255, 100, 0, 0.6);
+  margin-bottom: 18px;
+  padding: 15px;
+
+  /* TARJETA DE FUEGO */
+  --background: rgba(255, 255, 255, 0.1);
   border-radius: 18px;
-  padding: 16px;
-  color: white;
-  box-shadow:
-    0 0 15px rgba(255, 100, 0, 0.4),
-    inset 0 0 12px rgba(255, 60, 0, 0.2);
-  transition: transform 0.2s, box-shadow 0.3s;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  border: 2px solid rgba(255, 100, 0, 0.7);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 0 18px rgba(255, 70, 0, 0.9),
+              inset 0 0 15px rgba(255, 100, 0, 0.6);
+
+  animation: fireGlowCard 1.8s infinite alternate ease-in-out;
 }
 
-/* glow de fuego abajo */
-.target-card::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: radial-gradient(circle, rgba(255,140,0,0.6), transparent 70%);
-  filter: blur(20px);
-  pointer-events: none;
+@keyframes fireGlowCard {
+  0% { box-shadow: 0 0 10px rgba(255, 80, 0, 0.5), inset 0 0 8px rgba(255, 120, 0, 0.5); }
+  100% { box-shadow: 0 0 22px rgba(255, 100, 0, 1), inset 0 0 12px rgba(255, 120, 0, 1); }
 }
 
-.target-card:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 0 22px rgba(255, 80, 0, 0.9),
-    inset 0 0 18px rgba(255, 100, 0, 0.3);
-}
-
-/* Header de la card */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.type-tag {
-  background: rgba(255, 120, 0, 0.7);
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 6px;
-}
-
-/* Preview */
-.card-preview {
-  margin: 12px 0;
-  text-align: center;
-}
-
-.card-preview img {
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 120, 0, 0.4);
-  box-shadow: 0 0 12px rgba(255, 90, 0, 0.5);
-}
-
-/* Botones */
-.card-actions {
-  display: flex;
-  justify-content: space-between;
-}
-
-ion-button {
-  --border-radius: 10px;
+/* Texto de cada carta */
+.target-card h2 {
+  color: #fff3e0;
+  font-size: 1.3rem;
   font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.target-card p {
+  color: #ffe0c6;
+  margin-top: 5px;
+}
+
+/* Botones en columna */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 10px;
+
+  ion-button {
+    --border-radius: 12px;
+    font-weight: bold;
+  }
+}
+
+
+/* ======= SECCIÓN SIN TARGETS ======= */
+.empty-section {
+  text-align: center;
+  margin-top: 25%;
+  color: #ffe6d5;
+
+  .empty-icon {
+    font-size: 90px;
+    color: #fff1dd;
+    opacity: 0.85;
+    margin-bottom: 10px;
+    animation: floatIcon 3s ease-in-out infinite;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes floatIcon {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+  100% { transform: translateY(0); }
 }

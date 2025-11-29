@@ -196,15 +196,12 @@ export class HomePage {
     this.router.navigate(['/login']);
   }
 
-  // --------------------------
-  // 🔥 AÑADIDO POR TI
-  // --------------------------
   openAR(target: ARTarget) {
     this.router.navigate(['/ar-view'], {
       queryParams: { id: target.id }
     });
   }
-  // --------------------------
+
 
   private async showAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({ header, message, buttons: ['OK'] });
